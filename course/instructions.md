@@ -13,10 +13,10 @@ This repo starts with:
 
 ## Before you start
 
-- Claude Pro or higher (https://claude.com/pricing). Projects are in beta and aren't on every account yet, or on Team and Enterprise plans. To check, open the Code tab in the Claude desktop app, or https://claude.ai/code, and look for Projects in the sidebar or under More.
+- Claude Pro or higher (https://claude.com/pricing). Projects are in beta and aren't on every account yet, or on Team and Enterprise plans. To check, open the Code tab in the Claude desktop app, or https://claude.ai/code, and look for Projects in the sidebar.
 - A GitHub account
 - Node.js 24 or later and uv, as for Accountable
-- About two hours. Most of it is the agents working.
+- About an hour. Most of it is the agents working.
 
 Projects are part of Claude Code. If you use a different coding agent, I suggest watching this lesson rather than following along.
 
@@ -32,47 +32,35 @@ The threads use the Claude GitHub App to push their branches and open pull reque
 
 ## 3. Create the project
 
-Open Projects and create a project called Accountable Support. Add your new repo to it, then open the project's settings:
+Open **Projects** in the sidebar and click **New project**. Name it Accountable Support and leave "What do you want to work on?" empty. Under **Context**, click **+**, choose **Add repository** and pick your new repo. Then click **Create project**.
 
-- **General:** choose Sonnet 5.5 at medium effort for both the coordinator and the threads.
-- **Memory:** paste these instructions:
+When the project opens, the coordinator looks through the repo and may suggest some threads. Leave those and open the project's settings.
+
+In **General**, choose Sonnet 5.5 for the coordinator, and Sonnet 5.5 at medium effort for the threads. If it asks about existing threads, update them to Sonnet 5.5 as well.
+
+Then open **Memory**, paste these into **Project instructions** and click **Save changes**:
 
 ```
 We're building Accountable Support from docs/intent.md, using the tech stack in docs/TECH_STACK.md.
 
 Start with feature 1, the foundation, as one thread with one pull request. When I've merged it, start features 2 to 6 at the same time, with a thread and a pull request for each.
 
-I'll review and merge every pull request. Only post an update when a pull request is ready for me or a thread is stuck.
+I'll review and merge every pull request. Each time I merge one, update the other open pull requests from main. Once ticket detail (feature 2) is merged, add each feature to the ticket page where the intent asks for it.
+
+Only post an update when a pull request is ready for me or a thread is stuck.
 ```
 
-- **Environment:** the cloud comes with Node 22. Add this setup script to install Node 26:
+## 4. Review and merge the foundation
 
-```
-#!/bin/bash
-set -e
-npm install -g n
-n 26
-```
+As soon as you save the instructions, the coordinator starts a thread to build the foundation. You don't need to send it a message. After a few minutes the thread opens a pull request. Open it on GitHub, check that CI passed and look through the changes. Then merge it.
 
-## 4. Start the build
+## 5. Review and merge the other five features
 
-Send the project this message:
+When you merge the foundation, the coordinator starts five threads, one for each of features 2 to 6. They all work at the same time. Each thread opens its own pull request. If CI fails, the thread fixes the problem and pushes again.
 
-```
-Build Accountable Support from docs/intent.md.
-```
+Merge ticket detail (feature 2) first. The SLA times, the knowledge base articles and the customer ratings all show on its page. Then merge the others one at a time. After each merge, the threads update the other pull requests from `main`. Wait until a pull request's CI passes again before you merge it. If one still shows a conflict after a few minutes, ask the project to update it from `main`.
 
-## 5. Review and merge the foundation
-
-The coordinator starts a thread to build the foundation. When the thread is done, it opens a pull request. Open it on GitHub, check that CI passed and look through the changes. Then merge it.
-
-## 6. Review and merge the other five features
-
-The coordinator then starts five threads, one for each of features 2 to 6. They all work at the same time. Each thread opens its own pull request. If CI fails, the thread fixes the problem and pushes again.
-
-Merge the pull requests one at a time. After a merge, another pull request may show a conflict. Its thread doesn't find out by itself, so ask the project to update that pull request from `main`.
-
-## 7. Run it on your computer
+## 6. Run it on your computer
 
 Clone your repo into your projects folder, beside `accountable`. Use your own GitHub name in the address:
 
