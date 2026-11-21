@@ -13,16 +13,16 @@ This repo starts with:
 
 ## Before you start
 
-- Claude Pro or higher (https://claude.com/pricing). Projects are in beta and aren't on every account yet, or on Team and Enterprise plans. To check, open the Code tab in the Claude desktop app, or https://claude.ai/code, and look for Projects in the sidebar.
+- Claude Pro or higher (https://claude.com/pricing). Projects are in beta and aren't on every account yet, or on Team and Enterprise plans. To check, open the Code tab in the Claude desktop app, or https://claude.ai/code, and look for Projects in the sidebar or under More.
 - A GitHub account
 - Node.js 24 or later and uv, as for Accountable
-- About an hour. Most of it is the agents working.
+- About two hours. Most of it is the agents working.
 
 Projects are part of Claude Code. If you use a different coding agent, I suggest watching this lesson rather than following along.
 
 ## 1. Make your own copy of this repo
 
-On this repo's GitHub page, click **Use this template**, then **Create a new repository**. Choose your own account as the owner and name it `accountable-support`. It can be private or public.
+On this repo's GitHub page, click **Use this template**, then **Create a new repository**. Choose your own account as the owner and give it any name you like, such as `accountable-support`. It can be private or public.
 
 Use the template rather than a fork. With a fork, the agents' pull requests could go to my repo instead of yours.
 
@@ -32,7 +32,7 @@ The threads use the Claude GitHub App to push their branches and open pull reque
 
 ## 3. Create the project
 
-Open **Projects** in the sidebar and click **New project**. Name it Accountable Support and leave "What do you want to work on?" empty. Under **Context**, click **+**, choose **Add repository** and pick your new repo. Then click **Create project**.
+Open **Projects** in the sidebar and click **New project**. Name it Accountable Support and leave "What do you want to work on?" empty. Under **Context**, click **+**, choose **Add repository** and pick your new repo. Make sure **Project coordinator** is on, then click **Create project**.
 
 When the project opens, the coordinator looks through the repo and may suggest some threads. Leave those and open the project's settings.
 
@@ -58,11 +58,19 @@ As soon as you save the instructions, the coordinator starts a thread to build t
 
 When you merge the foundation, the coordinator starts five threads, one for each of features 2 to 6. They all work at the same time. Each thread opens its own pull request. If CI fails, the thread fixes the problem and pushes again.
 
-Merge ticket detail (feature 2) first. The SLA times, the knowledge base articles and the customer ratings all show on its page. Then merge the others one at a time. After each merge, the threads update the other pull requests from `main`. Wait until a pull request's CI passes again before you merge it. If one still shows a conflict after a few minutes, ask the project to update it from `main`.
+Merge ticket detail (feature 2) first. The SLA times, the knowledge base articles and the customer ratings all show on its page.
+
+After that merge, the other pull requests may have merge conflicts. Their threads don't find out by themselves, so tell the coordinator. With your own pull request numbers, I sent:
+
+```
+After merging PR 6, I notice PR 2 has merge conflicts, as others might do. Please resolve merge conflicts. Please always do this after I merge each PR.
+```
+
+Then merge the others one at a time. After each merge, the coordinator has the threads update the other pull requests from `main`. Wait until a pull request is ready to merge and its CI has passed before you merge it.
 
 ## 6. Run it on your computer
 
-Clone your repo into your projects folder, beside `accountable`. Use your own GitHub name in the address:
+Clone your repo into your projects folder, beside `accountable`. Use your own GitHub name, and your repo's name if it isn't `accountable-support`:
 
 ```
 git clone https://github.com/YOUR-GITHUB-NAME/accountable-support.git
